@@ -1,11 +1,23 @@
-<DOCTYPE! html>
+<?php 
+    include_once 'navbar.php'
+?>
 
-    <html>
-        <head>
-            <title>Landing Page</title>
-        </head>
+<!DOCTYPE html>
+<html>
 
-        <body>
-            <h1>Welcome to Tetris</h1>
-        </body>
-    </html>
+    <head>
+        <title>Landing Page</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+        <div class="main">
+            <div class="heading">
+                <h1>Welcome to Tetris</h1>
+            </div>
+            <div class="button">
+                <button onclick="location.href='tetris.php'" type="button">Click here to play</button>
+            </div>
+        </div>
+    </body>
+</html>

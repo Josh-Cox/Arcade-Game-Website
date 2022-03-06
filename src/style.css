@@ -1,0 +1,91 @@
+ul.menu {
+    list-style-type: none;
+    padding: 0px;
+    background-color: blue;
+    overflow: hidden;
+    margin: 0;
+
+}
+
+ul.menu li [name=home] {
+    float: left;
+    color: rgb(255, 0, 0);
+}
+
+ul.menu li [name=tetris] {
+    float: right;
+    color: rgb(255, 0, 255);
+
+}
+
+ul.menu li [name=leaderboard] {
+    float: right;
+    color: orange;
+}
+
+ul.menu li a {
+    color: white;
+    display: block;
+    height: 0.7cm;
+    width: 3cm;
+    text-align: center;
+    padding-top: 10px;
+    font: Arial;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 12px;
+
+}
+
+ul.menu li a:hover {
+    background-color: rgb(13, 140, 255);
+}
+
+div.heading {
+    margin: auto;
+    text-align: center;
+    font-size: 30pt;
+    background-color: #c7c7c7;
+    box-shadow: 5px 5px;
+    width: 800px;
+}
+
+div.button {
+    margin: auto;
+    text-align: center;
+    height: 200px
+}
+
+div.button button {
+    height: 100px;
+    width: 400px;
+    font-size: 30pt;
+    margin-top: 50px;
+}
+
+div.loginForm {
+    background-color: #c7c7c7;
+    text-align: center;
+    display: block;
+    width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 5px 5px;
+}
+div.main {
+    text-align: center;
+    background-image: url("../img/tetris.png");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+div.signUpForm {
+    background-color: #c7c7c7;
+    text-align: center;
+    display: block;
+    width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 5px 5px;
+    padding: 20px;
+}
