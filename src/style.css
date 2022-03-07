@@ -114,23 +114,85 @@ div.main {
 
 div.welcome {
     padding-top: 0cm;
-    color: black;
     font-size: 30px;
+    font-family: 'Signika', sans-serif;
+}
+
+div.welcome h1 {
+    color: #000000;
+    text-shadow: -2.5px 2.5px 0 #585858;
 }
 
 div.welcome button {
-    margin-top: 365px;
-    width: 250px;
-    height: 200px;
-    background-color: rgb(91, 162, 209);
+    background: linear-gradient(to bottom right, #ff234b, #ff3cef);
+    border: 0;
     border-radius: 10px;
-    font-size: 30px;
+    color: #FFFFFF;
+    cursor: pointer;
+    margin-top: 500px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 50px;
+    text-align: center;
+    padding: 0 10px;
+    transition: .2s;
+}
+
+div.welcome button:hover {
+  box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem rgba(239, 71, 101, 0.5), .125rem .125rem 1rem rgba(255, 154, 90, 0.5);
 }
 
 body { 
     background-color: #c4c4c4;
 }
 
+/*
+* Leaderboard
+*/
+
+table {
+    width: 150px; 
+    border-spacing: 2px;
+    border: solid white;
+    transform: translate(385px, 300px);
+    color: white;
+    border-collapse: collapse;
+}
+
+tbody, thead tr { display: block; }
+
+tbody {
+    height: 230px;
+    width: 224px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: rgb(70, 87, 184);
+}
+
+thead {
+    background-color: blue;
+}
+
+tbody td, thead th {
+    width: 100px;
+    text-align: center;
+    border: 1px solid white;
+}
+
+div.main table th:hover {
+    cursor: default;
+    background-color: rgb(101, 93, 218);
+}
+
+div.main table td:hover {
+    cursor: default;
+    background-color: rgb(101, 93, 218);
+}
+
+div.main h1 {
+        color: #000000;
+    text-shadow: -2.5px 2.5px 0 #585858;
+}
 /*
 * Register
 */
@@ -146,14 +208,5 @@ div.signUpForm {
     box-shadow: 5px 5px;
     padding: 20px;
 }
-
-
-
-
-
-
-
-
-
 
 
