@@ -1,45 +1,79 @@
-ul.menu {
-    list-style-type: none;
-    padding: 0px;
+nav {
+    height: 30px;
     background-color: blue;
-    overflow: hidden;
-    margin: 0;
-
+    list-style-type: none;
+    padding-top: 15px;
+    width: 800px;
+    margin-left: 368px;
+    border-radius: 100px;
 }
 
-ul.menu li [name=home] {
+nav li a[name=home] {
     float: left;
-    color: rgb(255, 0, 0);
+    width: 1cm;
+    margin-left: 20px;
 }
 
-ul.menu li [name=tetris] {
+nav li a[name=tetris] {
     float: right;
-    color: rgb(255, 0, 255);
-
+    width: 1.8cm;
+    margin-right: 20px;
 }
 
-ul.menu li [name=leaderboard] {
+nav li a[name=leaderboard] {
     float: right;
-    color: orange;
 }
 
-ul.menu li a {
-    color: white;
+nav li a {
     display: block;
     height: 0.7cm;
-    width: 3cm;
+    width: 2cm;
     text-align: center;
-    padding-top: 10px;
     font: Arial;
     text-decoration: none;
     font-weight: bold;
     font-size: 12px;
+    margin-left: 10px;
+    margin-right: 10px;
+    color: #33fcff;
+
+    position: relative;
+    font-family: "Poppins", sans-serif;
+    letter-spacing: 0.5px;
+    padding: 0 10px;
 
 }
 
-ul.menu li a:hover {
-    background-color: rgb(13, 140, 255);
+
+nav li a:before,
+nav li a:after {
+  content: "";
+  position: absolute;
+  height: 3px;
+  width: 0;
+  background-color: black;
+  transition: 0.3s;
 }
+
+nav li a:after {
+    left: 0;
+    bottom: 5px;
+}
+nav li a:before {
+    right: 0;
+    top: -6px;
+}
+nav li a:hover {
+    color: black;
+}
+nav li a:hover:after,
+nav li a:hover:before {
+    width: 50%;
+}
+
+
+
+
 
 div.heading {
     margin: auto;
@@ -89,3 +123,14 @@ div.signUpForm {
     box-shadow: 5px 5px;
     padding: 20px;
 }
+
+
+
+
+
+
+
+
+
+
+
