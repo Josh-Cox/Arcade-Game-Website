@@ -1,10 +1,14 @@
+/* 
+* Navbar
+*/
+
 nav {
     height: 30px;
     background-color: blue;
     list-style-type: none;
     padding-top: 15px;
     width: 800px;
-    margin-left: 368px;
+    margin: auto;
     border-radius: 100px;
 }
 
@@ -29,21 +33,19 @@ nav li a {
     height: 0.7cm;
     width: 2cm;
     text-align: center;
-    font: Arial;
-    text-decoration: none;
-    font-weight: bold;
     font-size: 12px;
     margin-left: 10px;
     margin-right: 10px;
-    color: #33fcff;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-family: Arial;
 
     position: relative;
-    font-family: "Poppins", sans-serif;
     letter-spacing: 0.5px;
     padding: 0 10px;
 
 }
-
 
 nav li a:before,
 nav li a:after {
@@ -51,7 +53,7 @@ nav li a:after {
   position: absolute;
   height: 3px;
   width: 0;
-  background-color: black;
+  background-color: rgb(250, 96, 255);
   transition: 0.3s;
 }
 
@@ -64,38 +66,17 @@ nav li a:before {
     top: -6px;
 }
 nav li a:hover {
-    color: black;
+    color: rgb(250, 96, 255);
 }
 nav li a:hover:after,
 nav li a:hover:before {
     width: 50%;
 }
 
+/*
+* Index
+*/
 
-
-
-
-div.heading {
-    margin: auto;
-    text-align: center;
-    font-size: 30pt;
-    background-color: #c7c7c7;
-    box-shadow: 5px 5px;
-    width: 800px;
-}
-
-div.button {
-    margin: auto;
-    text-align: center;
-    height: 200px
-}
-
-div.button button {
-    height: 100px;
-    width: 400px;
-    font-size: 30pt;
-    margin-top: 50px;
-}
 
 div.loginForm {
     background-color: #c7c7c7;
@@ -106,12 +87,54 @@ div.loginForm {
     margin-right: auto;
     box-shadow: 5px 5px;
 }
+
+/*
+* Main
+*/
+
 div.main {
-    text-align: center;
-    background-image: url("../img/tetris.png");
+    background-image: url('../img/tetris.png');
     background-repeat: no-repeat;
     background-position: center;
+    background-position: fixed;
+    background-size: 95%;
+
+
+    width: 1000px;
+    margin: auto;
+    background-color: #c7c7c7;
+    text-align: center;
+    height: 800px;
+
+    margin-top: 40px;
+    border-radius: 50px;
+    box-shadow: 5px 5px 5px #919191, 
+    -5px -5px 5px #b6b6b6;
 }
+
+div.welcome {
+    padding-top: 0cm;
+    color: black;
+    font-size: 30px;
+}
+
+div.welcome button {
+    margin-top: 365px;
+    width: 250px;
+    height: 200px;
+    background-color: rgb(91, 162, 209);
+    border-radius: 10px;
+    font-size: 30px;
+}
+
+body { 
+    background-color: #c4c4c4;
+}
+
+/*
+* Register
+*/
+
 
 div.signUpForm {
     background-color: #c7c7c7;

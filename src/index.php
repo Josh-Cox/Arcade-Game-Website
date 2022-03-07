@@ -12,10 +12,8 @@
 
     <body>
         <div class="main">
-            <div class="heading">
+            <div class="welcome">
                 <h1>Welcome to Tetris</h1>
-            </div>
-            <div class="button">
                 <button onclick="location.href='tetris.php'" type="button">Click here to play</button>
             </div>
         </div>

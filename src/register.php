@@ -7,7 +7,6 @@
     <head>
         <title>Registration Page</title>
         <link rel="stylesheet" href="style.css">
-        <meta charset="UFT-8">
     </head>
 
     <body>

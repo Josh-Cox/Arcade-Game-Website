@@ -2,7 +2,6 @@
 <html>
     <head>
         <meta charset='UFT-8'>
-        <title>Navbar</title>
         <link rel="stylesheet" href="style.css">
     </head>
 
