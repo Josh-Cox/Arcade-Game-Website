@@ -124,21 +124,24 @@ div.welcome h1 {
 }
 
 div.welcome button {
+    margin-top: 500px;
+    line-height: 50px;
+    border-radius: 10px;
+    font-size: 16px;
+    padding: 0 10px;
+}
+
+button {
     background: linear-gradient(to bottom right, #ff234b, #ff3cef);
     border: 0;
-    border-radius: 10px;
     color: #FFFFFF;
     cursor: pointer;
-    margin-top: 500px;
-    font-size: 16px;
     font-weight: 500;
-    line-height: 50px;
     text-align: center;
-    padding: 0 10px;
     transition: .2s;
 }
 
-div.welcome button:hover {
+button:hover {
   box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem rgba(239, 71, 101, 0.5), .125rem .125rem 1rem rgba(255, 154, 90, 0.5);
 }
 
@@ -197,17 +200,87 @@ div.main h1 {
 * Register
 */
 
-
 div.signUpForm {
     text-align: center;
     display: block;
-    width: 200px;
     margin-left: auto;
     margin-right: auto;
     margin-top: 350px;
-    padding: 20px;
+    width: 150px;
+    padding: 10px;
     line-height: 30px;
     outline: 4px solid white;
+    border-radius: 10px;
+}
+
+input[type=text], [type=password] {
+    line-height: 20px;
+    outline: none;
+    border: none;
+    border-radius: 25px;
+    color: black;
+    background-color: white;
+    text-align: center;
+}
+
+input[type=text]:focus, [type=password]:focus{
+    border: 1px solid #ff3cef;
+}
+
+div.signUpForm button {
+    margin-top: 20px;
+    line-height: 30px;
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 0 10px;
+}
+
+
+.switch {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15px;
+    width: 100px;
+    height: 25px;
+    text-align: center;
+    background: #00bc48;
+    transition: all 0.2s ease;
+    border-radius: 25px;
+}
+
+input[type=radio] {
+    display: none;
+}
+
+.switch label {
+    cursor: pointer;
+    color: #0000003f;
+    width: 60px;
+    line-height: 25px;
+    transition: all 0.2s ease;
+    font-family: Arial;
+    font-size: 15px;
+}
+
+label[for=radioYes] {
+    position: absolute;
+    right: 50%;
+}
+
+label[for=radioNo] {
+    position: absolute;
+}
+
+#radioNo:checked ~ .switch {
+    background: #eb4f37;
+}
+
+#radioYes:checked ~ .switch label[for=radioYes] {
+    color: white;
+}
+
+#radioNo:checked ~ .switch label[for=radioNo] {
+    color: white;
 }
 
 
