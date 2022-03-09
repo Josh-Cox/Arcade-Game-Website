@@ -15,7 +15,7 @@
                 <h1>Sign Up Page</h1>
             </div>
             <div class="signUpForm">
-                <form action="signUp.inc.php" method="post">
+                <form action="includes/register.inc.php" method="post">
                     <input type="text" name="fName" placeholder="First Name">
                     <input type="text" name="lName" placeholder="Last Name">
                     <input type="text" name="uName" placeholder="Username">
