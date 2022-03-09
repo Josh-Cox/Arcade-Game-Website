@@ -1,8 +1,8 @@
 <?php
 
 $serverName = "localhost";
-$dbUsername = "root";
-$dbPassword = "root";
+$dbUsername = "coursework";
+$dbPassword = "courseworkwebdev";
 $dbName = "coursework";
 $port = 1111;
 

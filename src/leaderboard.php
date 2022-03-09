@@ -1,5 +1,7 @@
 <?php   
-    include_once 'navbar.php'
+    include_once 'navbar.php';
+
+
 ?>
 
 <!DOCTYPE html>
@@ -14,6 +16,9 @@
             <div class="welcome">
                 <h1>Leaderboard</h1>
             </div>
+
+
+            
             <table>
                 <thead>
                     <tr>
@@ -22,10 +27,23 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Josh</td>
-                        <td>1990</td>
-                    </tr>
+                    
+                    <?php
+                        $conn = mysqli_connect("localhost", "coursework", "courseworkwebdev", "coursework", 1111);
+                        $result = mysqli_query($conn, "SELECT Username, Score FROM Scores ORDER BY Score DESC");
+                        $ranking = 1;
+                
+                        if (mysqli_num_rows($result)) {
+                            while ($row = mysqli_fetch_array($result)) {
+                                echo "<tr>
+                                <td>{$row['Username']}</td>
+                                <td>{$row['Score']}</td>
+                                </tr>";
+                                $ranking++;
+                            }
+                        }
+                    ?>
+                    
                 </tbody>
             </table>
         </div>

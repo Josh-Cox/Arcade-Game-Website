@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+
 /* 
 * Navbar
 */
@@ -77,16 +79,45 @@ nav li a:hover:before {
 * Index
 */
 
-
-div.loginForm {
-    background-color: #c7c7c7;
+div.loginForm{
     text-align: center;
     display: block;
-    width: 200px;
     margin-left: auto;
     margin-right: auto;
-    box-shadow: 5px 5px;
+    margin-top: 375px;
+    width: 150px;
+    padding: 10px;
+    line-height: 30px;
+    outline: 4px solid white;
+    border-radius: 10px;
 }
+
+div.loginForm a {
+    color: white;
+    font-family: Arial;
+    font-size: 12px;
+    line-height: 5px;
+    text-decoration: none;
+}
+
+div.loginForm p {
+    line-height: 20px;
+    padding-top: 10px;
+    margin: 0;
+}
+
+div.loginForm button {
+    margin-top: 20px;
+}
+
+#error {
+    color: rgb(238, 255, 0);
+    text-decoration: underline;
+    font-family: Arial;
+    padding-top: 10px;
+}
+
+
 
 /*
 * Main
@@ -115,16 +146,25 @@ div.main {
 div.welcome {
     padding-top: 0cm;
     font-size: 30px;
-    font-family: 'Signika', sans-serif;
+
 }
 
 div.welcome h1 {
     color: #000000;
-    text-shadow: -2.5px 2.5px 0 #585858;
+    font-family: 'Righteous', cursive;
+    margin-bottom: 5px;
 }
 
-div.welcome button {
-    margin-top: 500px;
+#play{
+    margin-top: 400px;
+    line-height: 50px;
+    border-radius: 10px;
+    font-size: 16px;
+    padding: 0 10px;
+}
+
+#logout{
+    margin-top: 30px;
     line-height: 50px;
     border-radius: 10px;
     font-size: 16px;
@@ -139,6 +179,10 @@ button {
     font-weight: 500;
     text-align: center;
     transition: .2s;
+    line-height: 30px;
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 0 10px;
 }
 
 button:hover {
@@ -205,7 +249,7 @@ div.signUpForm {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 350px;
+    margin-top: 320px;
     width: 150px;
     padding: 10px;
     line-height: 30px;
@@ -227,19 +271,17 @@ input[type=text]:focus, [type=password]:focus{
     border: 1px solid #ff3cef;
 }
 
-div.signUpForm button {
-    margin-top: 20px;
-    line-height: 30px;
-    border-radius: 5px;
-    font-size: 16px;
-    padding: 0 10px;
-}
 
+div.signUpForm p {
+    color: white;
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
 
 .switch {
     margin-left: auto;
     margin-right: auto;
-    margin-top: 15px;
+    margin-top: 0px;
     width: 100px;
     height: 25px;
     text-align: center;
@@ -283,4 +325,7 @@ label[for=radioNo] {
     color: white;
 }
 
+#signup {
+    margin-top: 20px;
+}
 

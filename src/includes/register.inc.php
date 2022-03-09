@@ -7,7 +7,18 @@ if (isset($_POST["submit"])) {
     $userName = $_POST["uName"];
     $pwd = $_POST["pwd"];
     $confirmPwd = $_POST["cPwd"];
-    $display = $_POST["display"];
+    $displayString = $_POST["display"];
+
+    if ($displayString == "yes") {
+        $display = 1;
+    }
+    else if ($displayString == "no") {
+        $display = 0;
+    }
+    else {
+        header("location: ../register.php?error=displayNotSet");
+        exit();
+    }
 
     require_once 'dbh.inc.php';
     require_once 'functions.inc.php';
@@ -23,7 +34,7 @@ if (isset($_POST["submit"])) {
     }
 
     if (userNameTaken($conn, $userName) !== false) {
-        header("location: ./register.php?error=userNameTaken");
+        header("location: ../register.php?error=userNameTaken");
         exit();
     }
 
