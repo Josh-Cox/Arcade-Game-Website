@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset='UFT-8'>
         <link rel="stylesheet" href="style.css">
+        <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon"/>
     </head>
 
     <body>

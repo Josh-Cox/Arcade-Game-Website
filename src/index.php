@@ -9,6 +9,7 @@
     <head>
         <title>Landing Page</title>
         <link rel="stylesheet" href="style.css">
+        
     </head>
 
     <body>
