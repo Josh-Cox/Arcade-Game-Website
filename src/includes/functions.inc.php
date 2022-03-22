@@ -66,8 +66,8 @@ function createUser($conn, $firstName, $lastName, $userName, $pwd, $display) {
     mysqli_stmt_execute($prepStatement);
     mysqli_stmt_close($prepStatement);
 
-    header("location: ../index.php?error=none");
-        exit();
+    header("location: ../src/index.php?error=none");
+    exit();
 }
 
 function emptyInputLogin($userName, $pwd) {
@@ -106,4 +106,6 @@ function loginUser($conn, $userName, $pwd) {
         exit();
     }
 }
+
+?>
 
