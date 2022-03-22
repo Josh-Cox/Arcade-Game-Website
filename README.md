@@ -1,6 +1,14 @@
 # Arcade-Game-Website
 
-A webserver hosting a tetris game with register, login and logout functions.
+An Apache web server hosting a tetris game with an SQL Database to contain user login information and game results.
+
+---
+
+## **Included Functionality**
+- Register Users
+- Login/Logout Users
+- Save and display user highscores
+- Play Tetris
 
 ---
 
