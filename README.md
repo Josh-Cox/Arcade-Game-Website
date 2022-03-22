@@ -8,6 +8,8 @@ A webserver hosting a tetris game with register, login and logout functions.
 - Open a browser
 - Navigate to ```http://[VMNAME]:63660```
 
+---
+
 |           |                         |
 | :-------: |:-----------------------:|
 |      ```Author```     |     Josh Cox     |
