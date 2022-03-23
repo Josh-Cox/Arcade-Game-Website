@@ -3,7 +3,7 @@
 $serverName = "localhost";
 $dbUsername = "coursework";
 $dbPassword = "courseworkwebdev";
-$dbName = "coursework";
+$dbName = "tetris";
 $port = 1111;
 
 $conn = mysqli_connect($serverName, $dbUsername, $dbPassword, $dbName, $port);
