@@ -14,7 +14,7 @@ An Apache web server hosting a tetris game with an SQL Database to contain user 
 
 ## **Getting Started**
 - Open a browser
-- Navigate to ```http://[VMNAME]:63660```
+- Navigate to ```http://ml-lab-4d78f073-aa49-4f0e-bce2-31e5254052c7.ukwest.cloudapp.azure.com:63660/Arcade-Game-Website/src/index.php```
 
 ---
 
