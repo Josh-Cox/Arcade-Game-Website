@@ -107,5 +107,21 @@ function loginUser($conn, $userName, $pwd) {
     }
 }
 
+function addScore($conn, $userName, $score) {
+    $sql = 'INSERT INTO Scores (Username, Score) VALUES (?, ?)';
+    $prepStatement = mysqli_stmt_init($conn);
+
+    if (!mysqli_stmt_prepare($prepStatement, $sql)) {
+        header("location: ../tetris.php?error=prepStatementFailed");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($prepStatement, 'si', $userName, $score);
+    mysqli_stmt_execute($prepStatement);
+    mysqli_stmt_close($prepStatement);
+
+    header("location: ../src/tetris.php?error=none");
+    exit();
+}
 ?>
 

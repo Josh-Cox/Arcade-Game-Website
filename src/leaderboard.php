@@ -1,7 +1,13 @@
 <?php   
     include_once 'navbar.php';
 
+    $data['Username'] = $_POST["Username"];
+    $data['Score'] = $_POST["Score"];
 
+    require_once 'includes/dbh.inc.php';
+    require_once 'includes/functions.inc.php';
+
+    addScore($conn, $data['Username'], $data['Score']);
 ?>
 
 <!DOCTYPE html>

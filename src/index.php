@@ -43,9 +43,6 @@
         
         createUser($conn, $firstName, $lastName, $userName, $pwd, $display);
     }
-    else {
-
-    }
 ?>
 
 <!DOCTYPE html>
