@@ -79,11 +79,17 @@ document.addEventListener('DOMContentLoaded', () => {
         case 0:
             currentBlock = tetrominoes.O;
             if (
-                (grid[0][4]) || 
-                (grid[0][5]) ||
-                (grid[1][4]) ||
-                (grid[1][5])) {
-                    //game over
+                (grid[0][4]) != "" || 
+                (grid[0][5]) != "" ||
+                (grid[1][4]) != "" ||
+                (grid[1][5]) != "") {
+                    gameOver(score);
+                }
+                else {
+                    grid[0][4] = "O";
+                    grid[0][5] = "O";
+                    grid[1][4] = "O";
+                    grid[1][5] = "O";
                 }
             break;
         case 1:
@@ -93,52 +99,74 @@ document.addEventListener('DOMContentLoaded', () => {
                 (grid[0][4]) != "" ||
                 (grid[0][5]) != "" ||
                 (grid[1][5]) != "") {
-                    console.log("Game Over");
                     gameOver(score);
                 }
                 else {
-                    console.log("Game Over");
-                    gameOver(score);
+                    grid[0][3] = "L";
+                    grid[0][4] = "L";
+                    grid[0][5] = "L";
+                    grid[1][5] = "L";
                 }
             break;
         case 2:
             currentBlock = tetrominoes.Z;
             if (
-                (grid[1][3]) || 
-                (grid[1][4]) ||
-                (grid[1][5]) ||
-                (grid[0][3])) {
-                    //game over
+                (grid[1][3]) != "" || 
+                (grid[1][4]) != "" ||
+                (grid[1][5]) != "" ||
+                (grid[0][3]) != "") {
+                    gameOver(score);
+                }
+                else {
+                    grid[1][3] = "Z";
+                    grid[1][4] = "Z";
+                    grid[1][5] = "Z";
+                    grid[0][3] = "Z";
                 }
             break;
         case 3:
             currentBlock = tetrominoes.S;
             if (
-                (grid[0][5]) || 
-                (grid[1][5]) ||
-                (grid[1][4]) ||
-                (grid[2][4])) {
-                    //game over
+                (grid[0][5]) != "" || 
+                (grid[1][5]) != "" ||
+                (grid[1][4]) != "" ||
+                (grid[2][4]) != "") {
+                    gameOver(score);
+                }
+                else {
+                    grid[0][5] = "S";
+                    grid[1][5] = "S";
+                    grid[1][4] = "S";
+                    grid[2][4] = "S";
                 }
             break;
         case 4:
             currentBlock = tetrominoes.T;
             if (
-                (grid[0][4]) || 
-                (grid[1][4]) ||
-                (grid[1][5]) ||
-                (grid[2][4])) {
-                    //game over
+                (grid[0][4]) != "" || 
+                (grid[1][4]) != "" ||
+                (grid[1][5]) != "" ||
+                (grid[2][4]) != "") {
+                    gameOver(score);
+                }
+                else {
+                    grid[0][4] = "T";
+                    grid[1][4] = "T";
+                    grid[1][5] = "T";
+                    grid[2][4] = "T";
                 }
             break;
         case 5:
             currentBlock = tetrominoes.I;
             if (
-                (grid[0][3]) || 
-                (grid[0][4]) ||
-                (grid[0][5]) ||
-                (grid[0][6])) {
-                    //game over
+                (grid[0][3]) != "" || 
+                (grid[0][4]) != "" ||
+                (grid[0][5]) != "" ||
+                (grid[0][6]) != "") {
+                    gameOver(score);
+                }
+                else {
+
                 }
             break;
     }

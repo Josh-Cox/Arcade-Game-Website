@@ -333,13 +333,15 @@ Tetris
 */
 
 .tetris-bg {
-    display: block;
     width: 300px;
     height: 600px;
-    color: #c7c7c7;
-    background-color: #c7c7c7;
-    margin-right: auto;
-    margin-left: auto;
+    background-color: yellow;
+}
+
+.tetris-bg div {
+    width: 30px;
+    height: 30px;
+    background-color: red;
 }
 
 button #start {
@@ -360,3 +362,4 @@ img #grid {
     border: 0;
     color: red;
 }
+

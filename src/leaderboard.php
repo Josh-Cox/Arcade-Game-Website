@@ -9,8 +9,6 @@
         require_once 'includes/functions.inc.php';
         require_once 'index.php';
 
-        
-        echo json_encode(['code'=>404, 'msg'=>$errorMSG]);
         addScore($conn, $Username, $Score);
     }
 ?>
@@ -37,7 +35,7 @@
                 <tbody>
                     
                     <?php
-                        $conn = mysqli_connect("localhost", "coursework", "courseworkwebdev", "coursework", 1111);
+                        $conn = mysqli_connect("localhost", "coursework", "courseworkwebdev", "tetris", 1111);
                         $result = mysqli_query($conn, "SELECT Username, Score FROM Scores ORDER BY Score DESC");
                         $ranking = 1;
                 
