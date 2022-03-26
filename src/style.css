@@ -335,13 +335,17 @@ Tetris
 .tetris-bg {
     width: 300px;
     height: 600px;
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: auto;
+    margin-right: auto;
     background-color: yellow;
 }
 
-.tetris-bg div {
+.block {
     width: 30px;
     height: 30px;
-    background-color: red;
+    background-color: blue;
 }
 
 button #start {
