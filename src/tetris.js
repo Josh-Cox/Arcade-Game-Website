@@ -53,29 +53,52 @@ document.addEventListener('DOMContentLoaded', () => {
     let startPosTaken = false;
     console.log(random);
 
-    //set up POST request
-    // let url = "http://localhost:8888/src/leaderboard.php";
-    // let xhr = new XMLHttpRequest();
-    // xhr.open("POST", url, true);
-
-    // xhr.setRequestHeader("Accept", "")
-
-    //test
     $.ajax({
-        type: "POST",
-        url: "leaderboard.php",
-        data: {
-        Username: "",
-        Score: score
-        },
-        cache: false,
-        success: function(data) {
-        alert(data);
-        },
-        error: function(xhr, status, error) {
-        console.error(xhr);
+        type: 'POST',
+        dataType: "json",
+        url:'index.php',
+        data:[],
+        success: function(data)
+        {
+         try {
+            data = JSON.parse(data);
+          }catch(e) {}
+          console.log(data);
         }
+      });
+
+
+    //POST score and username to leaderboard.php
+    function gameOver(score) {
+        $.ajax({
+
+
+            type: "POST",
+
+            url: "leaderboard.php",
+
+            dataType: "json",
+
+            data: {Username: "ValixDroid", Score: score},
+
+            success : function(data){
+
+                if (data.code == "200"){
+
+                    alert("Success: " +data.msg);
+
+                } else {
+
+                    $(".display-error").html("<ul>"+data.msg+"</ul>");
+
+                    $(".display-error").css("display","block");
+
+                }
+
+            }
+
         });
+    }
         
     
     switch(random) {
@@ -92,11 +115,16 @@ document.addEventListener('DOMContentLoaded', () => {
         case 1:
             currentBlock = tetrominoes.L;
             if (
-                (grid[0][3]) || 
-                (grid[0][4]) ||
-                (grid[0][5]) ||
-                (grid[1][5])) {
-                    //game over
+                (grid[0][3]) != "" || 
+                (grid[0][4]) != "" ||
+                (grid[0][5]) != "" ||
+                (grid[1][5]) != "") {
+                    console.log("Game Over");
+                    gameOver(score);
+                }
+                else {
+                    console.log("Game Over");
+                    gameOver(score);
                 }
             break;
         case 2:

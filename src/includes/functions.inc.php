@@ -120,7 +120,7 @@ function addScore($conn, $userName, $score) {
     mysqli_stmt_execute($prepStatement);
     mysqli_stmt_close($prepStatement);
 
-    header("location: ../src/tetris.php?error=none");
+    header("location: ../src/index.php?error=$score");
     exit();
 }
 ?>

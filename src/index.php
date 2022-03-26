@@ -13,6 +13,9 @@
         $confirmPwd = $_POST["cPwd"];
         $displayString = $_POST["display"];
         
+        $data = ['Username ' =>$userName];
+        echo json_encode($data);
+
         if ($displayString == "yes") {
             $display = 1;
         }

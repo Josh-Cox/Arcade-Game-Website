@@ -1,13 +1,21 @@
 <?php   
     include_once 'navbar.php';
 
-    $data['Username'] = $_POST["Username"];
-    $data['Score'] = $_POST["Score"];
+    if (empty($_POST["Username"])) {    
+        $errorMSG = "<li>Name is required</<li>";
+    }
+    else {
 
-    require_once 'includes/dbh.inc.php';
-    require_once 'includes/functions.inc.php';
-
-    addScore($conn, $data['Username'], $data['Score']);
+        $Username = $_POST["Username"];
+        $Score = $_POST["Score"];
+        
+        require_once 'includes/dbh.inc.php';
+        require_once 'includes/functions.inc.php';
+        
+        echo json_encode(['code'=>404, 'msg'=>$errorMSG]);
+        addScore($conn, $Username, $Score);
+        header("location: index.php?Username=$Score");
+    }
 ?>
 
 <!DOCTYPE html>
