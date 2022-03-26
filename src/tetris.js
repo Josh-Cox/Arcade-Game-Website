@@ -53,50 +53,24 @@ document.addEventListener('DOMContentLoaded', () => {
     let startPosTaken = false;
     console.log(random);
 
-    $.ajax({
-        type: 'POST',
-        dataType: "json",
-        url:'index.php',
-        data:[],
-        success: function(data)
-        {
-         try {
-            data = JSON.parse(data);
-          }catch(e) {}
-          console.log(data);
-        }
-      });
 
-
-    //POST score and username to leaderboard.php
+    //POST score to leaderboard.php
     function gameOver(score) {
         $.ajax({
 
-
             type: "POST",
-
             url: "leaderboard.php",
-
             dataType: "json",
-
-            data: {Username: "ValixDroid", Score: score},
-
+            data: {Score: score},
             success : function(data){
-
                 if (data.code == "200"){
-
                     alert("Success: " +data.msg);
-
                 } else {
-
                     $(".display-error").html("<ul>"+data.msg+"</ul>");
-
                     $(".display-error").css("display","block");
-
                 }
-
-            }
-
+            },
+            async: true,
         });
     }
         

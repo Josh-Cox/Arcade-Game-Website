@@ -59,7 +59,7 @@
     <body>
         <div class="main">
             <?php
-                if (isset($_SESSION["userName"])) { ?>
+                if (isset($_SESSION["userName"])) { $Username = $_SESSION["userName"]?>
                     <div class="welcome">
                         <h1>Welcome to Tetris</h1>
                         <button onclick="location.href='tetris.php';" type="button" id="play">Click here to play</button><br>
@@ -97,5 +97,9 @@
                 <?php
                 } ?>
         </div>
+        <script type="text/javascript">
+            let Username = "<?php echo"$userName"?>";
+            document.write(Username);
+        </script>
     </body>
 </html>

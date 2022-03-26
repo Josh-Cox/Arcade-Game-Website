@@ -66,7 +66,7 @@ function createUser($conn, $firstName, $lastName, $userName, $pwd, $display) {
     mysqli_stmt_execute($prepStatement);
     mysqli_stmt_close($prepStatement);
 
-    header("location: ../src/index.php?error=none");
+    header("location: ../src/index.php?error=None");
     exit();
 }
 
@@ -120,7 +120,7 @@ function addScore($conn, $userName, $score) {
     mysqli_stmt_execute($prepStatement);
     mysqli_stmt_close($prepStatement);
 
-    header("location: ../src/index.php?error=$score");
+    header("location: ../src/index.php?error=None");
     exit();
 }
 ?>
