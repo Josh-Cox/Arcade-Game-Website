@@ -49,18 +49,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let score = 0;
     let currentBlock = TETROMINOS.L;
-
+    /**
+     * Sets position and attributes of tetromino
+     * @param shape 
+     */
+    function drawNewShape(shape) {
+        if (shape = TETROMINOS.L) {
+            createDiv().id = "blue";
+            createDiv().id = "blue";
+            createDiv().id = "blue";
+            temp = createDiv();
+            temp.id = "blue";
+            temp.style.transform = "translate(-30px, 30px)";
+        }
+    }
+    
     /**
      * Draws a tetromino on the grid
      */
-    function drawNewDiv() {
-
+    function createDiv() {
         const newDiv = document.createElement("div");
         newDiv.className = "block";
-        document.getElementById("tetris-grid").appendChild(newDiv);
+        return document.getElementById("tetris-grid").appendChild(newDiv);
     }
 
-    drawNewDiv();
+    drawNewShape(TETROMINOS.L);
+
     
     
     /**

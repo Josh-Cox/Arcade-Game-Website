@@ -335,10 +335,10 @@ Tetris
 .tetris-bg {
     width: 300px;
     height: 600px;
-    display: flex;
-    flex-wrap: wrap;
     margin-left: auto;
     margin-right: auto;
+    display: flex;
+    flex-wrap: wrap;
     background-color: yellow;
 }
 
