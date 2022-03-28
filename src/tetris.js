@@ -49,6 +49,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let score = 0;
     let currentBlock = TETROMINOS.L;
+    let currentPositionX = 90;
+    let currentPositionY = 0;
+
+    setInterval(function(){ 
+        moveDown(); 
+    }, 1000);
+
+    function moveDown() {
+
+        temp = document.querySelectorAll(".block");
+        console.log(temp);
+
+        if (currentPositionY >= 540) {
+            for (let i = 0; i < temp.length; i++) {
+                temp[i].className = "taken";
+            }
+            console.log(temp);
+            currentPositionY = 0;
+        }
+        else {
+            for (let i = 0; i < temp.length; i++) {
+                temp[i].style.transform = "translate(" + currentPositionX + "px," + (currentPositionY + 30) + "px)";
+            }
+            currentPositionY += 30;
+        }
+
+
+    }
+
+
     /**
      * Sets position and attributes of tetromino
      * @param shape 
@@ -60,7 +90,15 @@ document.addEventListener('DOMContentLoaded', () => {
             createDiv().id = "blue";
             temp = createDiv();
             temp.id = "blue";
-            temp.style.transform = "translate(-30px, 30px)";
+            temp.style.position = "relative";
+            temp.style.top = "30px";
+            temp.style.right = "30px";
+
+            selectAll = document.querySelectorAll(".block")
+
+            for (let i = 0; i < selectAll.length; i++) {
+                selectAll[i].style.transform = "translate(" + currentPositionX + "px," + currentPositionY + "px)";
+            }
         }
     }
     
@@ -73,8 +111,45 @@ document.addEventListener('DOMContentLoaded', () => {
         return document.getElementById("tetris-grid").appendChild(newDiv);
     }
 
-    drawNewShape(TETROMINOS.L);
+    document.addEventListener("keydown", test);
 
+    function test(keydown) {
+        switch (keydown.key) {
+            case "ArrowLeft":
+                console.log("LEFT");
+                moveLeft();
+                break;
+            case "ArrowRight":
+                console.log("RIGHT");
+                moveRight();
+                break;
+        }
+    }
+
+    function moveLeft() {
+        temp = document.querySelectorAll(".block");
+        console.log(temp.length);
+
+        for (let i = 0; i < temp.length; i++) {
+            temp[i].style.transform = "translate(" + (currentPositionX - 30) + "px," + (currentPositionY) + "px)";
+        }
+
+        currentPositionX -= 30;
+    }
+
+    function moveRight() {
+        temp = document.querySelectorAll(".block");
+        console.log(temp);
+
+        for (let i = 0; i < temp.length; i++) {
+            temp[i].style.transform = "translate(" + (currentPositionX + 30) + "px," + (currentPositionY) + "px)";
+        }
+
+        currentPositionX += 30;
+    }
+
+    
+    newBlock();
     
     
     /**
@@ -100,12 +175,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
+
     /**
      * Creates a new block on the tetris grid
      */
     function newBlock() {
 
-        let random = Math.floor(Math.random()*6);
+        // let random = Math.floor(Math.random()*6);
+        let random = 1;
         switch(random) {
             case 0:
                 currentBlock = TETROMINOS.O;
@@ -122,6 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         grid[1][4] = "O";
                         grid[1][5] = "O";
                     }
+
                 break;
             case 1:
                 currentBlock = TETROMINOS.L;
@@ -138,6 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         grid[0][5] = "L";
                         grid[1][5] = "L";
                     }
+                    drawNewShape(TETROMINOS.L);
                 break;
             case 2:
                 currentBlock = TETROMINOS.Z;
