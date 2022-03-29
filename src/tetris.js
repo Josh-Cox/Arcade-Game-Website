@@ -47,37 +47,111 @@ document.addEventListener('DOMContentLoaded', () => {
         "I": [[1, 1], [1, 2], [1, 3], [1, 4]]
     };
 
+    let currentPos = [[0, 0], [0, 0], [0, 0], [0, 0]];
+
     let score = 0;
     let currentBlock = TETROMINOS.L;
     let currentPositionX = 90;
     let currentPositionY = 0;
 
-    setInterval(function(){ 
-        moveDown(); 
-    }, 1000);
-
-    function moveDown() {
-
-        temp = document.querySelectorAll(".block");
-        console.log(temp);
-
-        if (currentPositionY >= 540) {
-            for (let i = 0; i < temp.length; i++) {
-                temp[i].className = "taken";
-            }
-            console.log(temp);
-            currentPositionY = 0;
-        }
-        else {
-            for (let i = 0; i < temp.length; i++) {
-                temp[i].style.transform = "translate(" + currentPositionX + "px," + (currentPositionY + 30) + "px)";
-            }
-            currentPositionY += 30;
-        }
-
-
+    function getKeyByValue(object, value) {
+        return Object.keys(object).find(key => object[key] === value);
     }
 
+    function setGrid(tetromino) {
+        currentPos = [[0, 0], [0, 0], [0, 0], [0, 0]];
+        console.log(currentPos);
+        console.log(currentPositionX);
+        console.log(currentPositionY);
+        let gameOver = false;
+        
+        //set correct currentPos
+        for (let i = 0; i < tetromino.length; i++) {
+            currentPos[i][0] = tetromino[i][0] - 1;
+            currentPos[i][1] = tetromino[i][1] + 2;
+        }
+
+        //loop through tetromino coords
+        for (let i = 0; i < currentPos.length; i++) {
+            //set grid coords
+            if (grid[currentPos[i][0]][currentPos[i][1]] == "") {
+                grid[currentPos[i][0]][currentPos[i][1]] = getKeyByValue(TETROMINOS, tetromino);
+            }
+            else {
+                gameOver = true;
+                alert("GAME OVER");
+                gameOver();
+            }
+        }
+        if (gameOver == false) {
+            drawNewShape(currentBlock);
+        }
+    }
+
+    setInterval(function() {
+        moveDown();
+    }, 1000);
+
+    setInterval(function() {
+        if (document.querySelectorAll(".block").length == 0) {
+            currentPositionX = 90;
+            currentPositionY = 0;
+            newBlock();
+        }
+    }, 10);
+
+    function moveDown() {
+        if (document.querySelectorAll(".block").length != 0) {
+
+            let free = true;
+            //check coords below are free
+            for (let i = 0; i < currentPos.length; i++) {
+                if (currentPos[i][0] < 19) {
+                    if (grid[currentPos[i][0] + 1][currentPos[i][1]] == "Q") {
+                        free = false;
+                    }
+                }
+            }
+            if (free == true) {
+                //grab all active blocks
+                temp = document.querySelectorAll(".block");
+                //if at bottom of grid
+                if (currentPositionY >= 540) {
+                    //change blocks class to "taken"
+                    for (let i = 0; i < temp.length; i++) {
+                        temp[i].className = "taken";
+                    }
+                    currentPositionY = 0;
+                }
+                else {
+                    //set old grid coords to blank
+                    for (let i = 0; i < currentPos.length; i++) {
+                        if (currentPos[i][0] < 19) {
+                            grid[currentPos[i][0]][currentPos[i][1]] = "";
+                        }
+                    }
+                    //set new currentPos
+                    for (let i = 0; i < currentPos.length; i++) {
+                        if (currentPos[i][0] < 19) {
+                            currentPos[i][0] = currentPos[i][0] + 1;
+                    }
+                    }
+                    //set new grid coords to tetromino letter
+                    for (let i = 0; i < currentPos.length; i++) {
+                        if (currentPos[i][0] < 19) {
+                            grid[currentPos[i][0]][currentPos[i][1]] = getKeyByValue(TETROMINOS, currentBlock);
+                        }
+                    }
+
+                    //move tetromino down
+                    currentPositionY += 30;
+                    for (let i = 0; i < temp.length; i++) {
+                        temp[i].style.transform = "translate(" + currentPositionX + "px," + (currentPositionY) + "px)";
+                    }
+                }
+            }
+        }
+    }
 
     /**
      * Sets position and attributes of tetromino
@@ -116,19 +190,19 @@ document.addEventListener('DOMContentLoaded', () => {
     function test(keydown) {
         switch (keydown.key) {
             case "ArrowLeft":
-                console.log("LEFT");
                 moveLeft();
                 break;
             case "ArrowRight":
-                console.log("RIGHT");
                 moveRight();
+                break;
+            case "ArrowDown":
+                moveDown();
                 break;
         }
     }
 
     function moveLeft() {
         temp = document.querySelectorAll(".block");
-        console.log(temp.length);
 
         for (let i = 0; i < temp.length; i++) {
             temp[i].style.transform = "translate(" + (currentPositionX - 30) + "px," + (currentPositionY) + "px)";
@@ -139,7 +213,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function moveRight() {
         temp = document.querySelectorAll(".block");
-        console.log(temp);
 
         for (let i = 0; i < temp.length; i++) {
             temp[i].style.transform = "translate(" + (currentPositionX + 30) + "px," + (currentPositionY) + "px)";
@@ -147,9 +220,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         currentPositionX += 30;
     }
-
-    
-    newBlock();
     
     
     /**
@@ -181,103 +251,33 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     function newBlock() {
 
+        currentPos = [[0, 0], [0, 0], [0, 0], [0, 0]];
         // let random = Math.floor(Math.random()*6);
         let random = 1;
         switch(random) {
             case 0:
                 currentBlock = TETROMINOS.O;
-                if (
-                    (grid[0][4]) != "" || 
-                    (grid[0][5]) != "" ||
-                    (grid[1][4]) != "" ||
-                    (grid[1][5]) != "") {
-                        gameOver(score);
-                    }
-                    else {
-                        grid[0][4] = "O";
-                        grid[0][5] = "O";
-                        grid[1][4] = "O";
-                        grid[1][5] = "O";
-                    }
-
+                setGrid(currentBlock);
                 break;
             case 1:
                 currentBlock = TETROMINOS.L;
-                if (
-                    (grid[0][3]) != "" || 
-                    (grid[0][4]) != "" ||
-                    (grid[0][5]) != "" ||
-                    (grid[1][5]) != "") {
-                        gameOver(score);
-                    }
-                    else {
-                        grid[0][3] = "L";
-                        grid[0][4] = "L";
-                        grid[0][5] = "L";
-                        grid[1][5] = "L";
-                    }
-                    drawNewShape(TETROMINOS.L);
+                setGrid(currentBlock);
                 break;
             case 2:
                 currentBlock = TETROMINOS.Z;
-                if (
-                    (grid[1][3]) != "" || 
-                    (grid[1][4]) != "" ||
-                    (grid[1][5]) != "" ||
-                    (grid[0][3]) != "") {
-                        gameOver(score);
-                    }
-                    else {
-                        grid[1][3] = "Z";
-                        grid[1][4] = "Z";
-                        grid[1][5] = "Z";
-                        grid[0][3] = "Z";
-                    }
+                setGrid(currentBlock);
                 break;
             case 3:
                 currentBlock = TETROMINOS.S;
-                if (
-                    (grid[0][5]) != "" || 
-                    (grid[1][5]) != "" ||
-                    (grid[1][4]) != "" ||
-                    (grid[2][4]) != "") {
-                        gameOver(score);
-                    }
-                    else {
-                        grid[0][5] = "S";
-                        grid[1][5] = "S";
-                        grid[1][4] = "S";
-                        grid[2][4] = "S";
-                    }
+                setGrid(currentBlock);
                 break;
             case 4:
                 currentBlock = TETROMINOS.T;
-                if (
-                    (grid[0][4]) != "" || 
-                    (grid[1][4]) != "" ||
-                    (grid[1][5]) != "" ||
-                    (grid[2][4]) != "") {
-                        gameOver(score);
-                    }
-                    else {
-                        grid[0][4] = "T";
-                        grid[1][4] = "T";
-                        grid[1][5] = "T";
-                        grid[2][4] = "T";
-                    }
+                setGrid(currentBlock);
                 break;
             case 5:
                 currentBlock = TETROMINOS.I;
-                if (
-                    (grid[0][3]) != "" || 
-                    (grid[0][4]) != "" ||
-                    (grid[0][5]) != "" ||
-                    (grid[0][6]) != "") {
-                        gameOver(score);
-                    }
-                    else {
-
-                    }
+                setGrid(currentBlock);
                 break;
         }
     }
