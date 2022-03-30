@@ -54,6 +54,8 @@ function gameStart() {
     let start = false;
     let free = false;
     let freeze = false;
+    let movableR = true;
+    let movableL = true;
     let gameFinished = false;
     let currentBlock = TETROMINOS.L;
     let currentPositionX = 90;
@@ -112,9 +114,11 @@ function gameStart() {
 
         //freeze block
         if (freeze == true) {
-            freeze = false;
             console.log("BLOCK FROZEN");
+            freeze = false;
             start = false;
+            movableL = true;
+            movableR = true;
 
             //grab all active blocks
             temp = document.querySelectorAll(".block");
@@ -128,8 +132,6 @@ function gameStart() {
                 grid[(currentPos[i][0])][(currentPos[i][1])] = "Q";
             }
             
-            currentPositionY = 0;
-            currentPositionX = 90;
             score += 1;
             newBlock();
         }
@@ -182,6 +184,8 @@ function gameStart() {
      */
     function drawNewShape(shape) {
         if (shape = TETROMINOS.L) {
+            currentPositionX = 90;
+            currentPositionY = 0;
             createDiv().id = "blue";
             createDiv().id = "blue";
             createDiv().id = "blue";
@@ -224,23 +228,77 @@ function gameStart() {
     }
 
     function moveLeft() {
-        temp = document.querySelectorAll(".block");
 
-        for (let i = 0; i < temp.length; i++) {
-            temp[i].style.transform = "translate(" + (currentPositionX - 30) + "px," + (currentPositionY) + "px)";
+        //check if in bounds
+        for (let i = 0; i < currentPos.length; i++) {
+            if (currentPos[i][1] <= 0) {
+                movableL = false;
+            }
         }
 
-        currentPositionX -= 30;
+        if (movableL == true) {
+            console.log("LEFT");
+            //set old grid coords to blank
+            for (let i = 0; i < currentPos.length; i++) {
+                grid[(currentPos[i][0])][(currentPos[i][1])] = "";
+            }
+    
+            //set new currentPos
+            for (let i = 0; i < currentPos.length; i++) {
+                currentPos[i][1] = currentPos[i][1] - 1;
+            }
+            
+            //set new grid coords to tetromino letter
+            for (let i = 0; i < currentPos.length; i++) {
+                grid[currentPos[i][0]][currentPos[i][1]] = getKeyByValue(TETROMINOS, currentBlock);
+            }
+    
+            //move tetromino
+            temp = document.querySelectorAll(".block");
+            currentPositionX -= 30;
+            for (let i = 0; i < temp.length; i++) {
+                temp[i].style.transform = "translate(" + (currentPositionX) + "px," + (currentPositionY) + "px)";
+            }
+        }
+        movableL = true;
+
     }
 
     function moveRight() {
-        temp = document.querySelectorAll(".block");
 
-        for (let i = 0; i < temp.length; i++) {
-            temp[i].style.transform = "translate(" + (currentPositionX + 30) + "px," + (currentPositionY) + "px)";
+        //check if in bounds
+        for (let i = 0; i < currentPos.length; i++) {
+            if (currentPos[i][1] >= 9) {
+                movableR = false;
+            }
         }
 
-        currentPositionX += 30;
+        if (movableR == true) {
+            console.log("RIGHT");
+
+            //set old grid coords to blank
+            for (let i = 0; i < currentPos.length; i++) {
+                grid[(currentPos[i][0])][(currentPos[i][1])] = "";
+            }
+            
+            //set new currentPos
+            for (let i = 0; i < currentPos.length; i++) {
+                currentPos[i][1] = currentPos[i][1] + 1;
+            }
+            
+            //set new grid coords to tetromino letter
+            for (let i = 0; i < currentPos.length; i++) {
+                grid[currentPos[i][0]][currentPos[i][1]] = getKeyByValue(TETROMINOS, currentBlock);
+            }
+            
+            //move tetromino
+            temp = document.querySelectorAll(".block");
+            currentPositionX += 30;
+            for (let i = 0; i < temp.length; i++) {
+                temp[i].style.transform = "translate(" + (currentPositionX) + "px," + (currentPositionY) + "px)";
+            } 
+        }
+        movableR = true;
     }
     
     

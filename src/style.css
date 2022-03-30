@@ -337,6 +337,8 @@ Tetris
     height: 600px;
     margin-left: auto;
     margin-right: auto;
+    display: flex;
+    flex-wrap: wrap;
     background-color: yellow;
 }
 
@@ -351,6 +353,8 @@ Tetris
 .taken {
     width: 30px;
     height: 30px;
+    position: relative;
+    float: left;
     background-color: red;
 }
 
