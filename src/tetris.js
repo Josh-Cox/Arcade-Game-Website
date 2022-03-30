@@ -1,4 +1,5 @@
-document.addEventListener('DOMContentLoaded', () => {
+function gameStart() {
+    document.getElementById("tetrisStart").style.visibility = "hidden";
 
     let grid = [
 
@@ -50,6 +51,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentPos = [[0, 0], [0, 0], [0, 0], [0, 0]];
 
     let score = 0;
+    let start = false;
+    let free = false;
+    let freeze = false;
+    let gameFinished = false;
     let currentBlock = TETROMINOS.L;
     let currentPositionX = 90;
     let currentPositionY = 0;
@@ -59,17 +64,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function setGrid(tetromino) {
-        currentPos = [[0, 0], [0, 0], [0, 0], [0, 0]];
-        console.log(currentPos);
-        console.log(currentPositionX);
-        console.log(currentPositionY);
-        let gameOver = false;
         
         //set correct currentPos
         for (let i = 0; i < tetromino.length; i++) {
             currentPos[i][0] = tetromino[i][0] - 1;
             currentPos[i][1] = tetromino[i][1] + 2;
         }
+        console.log(currentPos[0][1]);
+        console.log(currentPos[1][1]);
+        console.log(currentPos[2][1]);
+        console.log(currentPos[3][1]);
 
         //loop through tetromino coords
         for (let i = 0; i < currentPos.length; i++) {
@@ -78,78 +82,97 @@ document.addEventListener('DOMContentLoaded', () => {
                 grid[currentPos[i][0]][currentPos[i][1]] = getKeyByValue(TETROMINOS, tetromino);
             }
             else {
-                gameOver = true;
+                gameFinished = true;
                 alert("GAME OVER");
-                gameOver();
+                gameOver(score);
             }
         }
-        if (gameOver == false) {
-            drawNewShape(currentBlock);
+
+        if (gameFinished == false) {
+            drawNewShape(TETROMINOS.L);
+            start = true;
         }
     }
 
     setInterval(function() {
-        moveDown();
-    }, 1000);
-
-    setInterval(function() {
-        if (document.querySelectorAll(".block").length == 0) {
-            currentPositionX = 90;
-            currentPositionY = 0;
-            newBlock();
+        if (start = true) {
+            moveDown();
         }
-    }, 10);
+    }, 1000);
+    
 
     function moveDown() {
-        if (document.querySelectorAll(".block").length != 0) {
 
-            let free = true;
-            //check coords below are free
+        // check if block is at bottom
+        for (let i = 0; i < currentPos.length; i++) {
+            if (currentPos[i][0] > 18) {
+                freeze = true;
+            }
+        }
+
+        //freeze block
+        if (freeze == true) {
+            freeze = false;
+            console.log("BLOCK FROZEN");
+            start = false;
+
+            //grab all active blocks
+            temp = document.querySelectorAll(".block");
+
+            //change blocks class to "taken"
+            for (let i = 0; i < temp.length; i++) {
+                temp[i].className = "taken";
+            }
+            //set grid coords to "Q"
             for (let i = 0; i < currentPos.length; i++) {
-                if (currentPos[i][0] < 19) {
-                    if (grid[currentPos[i][0] + 1][currentPos[i][1]] == "Q") {
-                        free = false;
-                    }
+                grid[(currentPos[i][0])][(currentPos[i][1])] = "Q";
+            }
+            
+            currentPositionY = 0;
+            currentPositionX = 90;
+            score += 1;
+            newBlock();
+        }
+        //check coords below are free
+        else {
+            for (let i = 0; i < currentPos.length; i++) {
+                if (grid[(currentPos[i][0] + 1)][(currentPos[i][1])] != "Q") {
+                    free = true;
                 }
             }
-            if (free == true) {
-                //grab all active blocks
-                temp = document.querySelectorAll(".block");
-                //if at bottom of grid
-                if (currentPositionY >= 540) {
-                    //change blocks class to "taken"
-                    for (let i = 0; i < temp.length; i++) {
-                        temp[i].className = "taken";
-                    }
-                    currentPositionY = 0;
-                }
-                else {
-                    //set old grid coords to blank
-                    for (let i = 0; i < currentPos.length; i++) {
-                        if (currentPos[i][0] < 19) {
-                            grid[currentPos[i][0]][currentPos[i][1]] = "";
-                        }
-                    }
-                    //set new currentPos
-                    for (let i = 0; i < currentPos.length; i++) {
-                        if (currentPos[i][0] < 19) {
-                            currentPos[i][0] = currentPos[i][0] + 1;
-                    }
-                    }
-                    //set new grid coords to tetromino letter
-                    for (let i = 0; i < currentPos.length; i++) {
-                        if (currentPos[i][0] < 19) {
-                            grid[currentPos[i][0]][currentPos[i][1]] = getKeyByValue(TETROMINOS, currentBlock);
-                        }
-                    }
 
-                    //move tetromino down
-                    currentPositionY += 30;
-                    for (let i = 0; i < temp.length; i++) {
-                        temp[i].style.transform = "translate(" + currentPositionX + "px," + (currentPositionY) + "px)";
+            //move block down
+            if (free == true) {
+                free = false;
+
+                //set old grid coords to blank
+                for (let i = 0; i < currentPos.length; i++) {
+                    if (currentPos[i][0] < 19) {
+                        grid[(currentPos[i][0])][(currentPos[i][1])] = "";
                     }
                 }
-            }
+
+                //set new currentPos
+                for (let i = 0; i < currentPos.length; i++) {
+                    if (currentPos[i][0] < 19) {
+                        currentPos[i][0] = currentPos[i][0] + 1;
+                    }
+                }
+                
+                //set new grid coords to tetromino letter
+                for (let i = 0; i < currentPos.length; i++) {
+                    if (currentPos[i][0] < 19) {
+                        grid[currentPos[i][0]][currentPos[i][1]] = getKeyByValue(TETROMINOS, currentBlock);
+                    }
+                }
+
+                //move tetromino down
+                tempDisplay = document.querySelectorAll(".block");
+                currentPositionY += 30;
+                for (let i = 0; i < tempDisplay.length; i++) {
+                    tempDisplay[i].style.transform = "translate(" + currentPositionX + "px," + (currentPositionY) + "px)";
+                }
+            }   
         }
     }
 
@@ -164,7 +187,6 @@ document.addEventListener('DOMContentLoaded', () => {
             createDiv().id = "blue";
             temp = createDiv();
             temp.id = "blue";
-            temp.style.position = "relative";
             temp.style.top = "30px";
             temp.style.right = "30px";
 
@@ -251,7 +273,6 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     function newBlock() {
 
-        currentPos = [[0, 0], [0, 0], [0, 0], [0, 0]];
         // let random = Math.floor(Math.random()*6);
         let random = 1;
         switch(random) {
@@ -261,7 +282,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 break;
             case 1:
                 currentBlock = TETROMINOS.L;
-                setGrid(currentBlock);
+                setGrid(TETROMINOS.L);
                 break;
             case 2:
                 currentBlock = TETROMINOS.Z;
@@ -281,4 +302,5 @@ document.addEventListener('DOMContentLoaded', () => {
                 break;
         }
     }
-})
+    newBlock();
+}
