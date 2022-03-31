@@ -17,6 +17,7 @@
                 <h1>Tetris Game Screen</h1>
             </div>
             <button type="button" id="tetrisStart" onclick="gameStart()">Start the game</button> 
+            <img src="../img/tetris-grid-bg.png" id="tetris-back">
             <div class="tetris-bg" id="tetris-grid">
 
             </div>

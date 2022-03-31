@@ -184,6 +184,7 @@ function gameStart() {
                 }
             }   
         }
+        
     }
 
     /**
@@ -229,9 +230,9 @@ function gameStart() {
         return document.getElementById("tetris-grid").appendChild(newDiv);
     }
 
-    document.addEventListener("keydown", test);
+    document.addEventListener("keydown", move);
 
-    function test(keydown) {
+    function move(keydown) {
         switch (keydown.key) {
             case "ArrowLeft":
                 moveLeft();
@@ -241,6 +242,10 @@ function gameStart() {
                 break;
             case "ArrowDown":
                 moveDown();
+                keydown.preventDefault();
+                break;
+            case "ArrowUp":
+                keydown.preventDefault();
                 break;
         }
     }
