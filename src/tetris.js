@@ -52,7 +52,7 @@ function gameStart() {
 
     let score = 0;
     let start = false;
-    let free = false;
+    let free = true;
     let freeze = false;
     let movableR = true;
     let movableL = true;
@@ -72,10 +72,7 @@ function gameStart() {
             currentPos[i][0] = tetromino[i][0] - 1;
             currentPos[i][1] = tetromino[i][1] + 2;
         }
-        console.log(currentPos[0][1]);
-        console.log(currentPos[1][1]);
-        console.log(currentPos[2][1]);
-        console.log(currentPos[3][1]);
+
 
         //loop through tetromino coords
         for (let i = 0; i < currentPos.length; i++) {
@@ -85,19 +82,23 @@ function gameStart() {
             }
             else {
                 gameFinished = true;
-                alert("GAME OVER");
-                gameOver(score);
+                start = false;
             }
         }
 
-        if (gameFinished == false) {
+        if (gameFinished == true) {
+            gameOver(score);
+            // location.reload();
+        }
+
+        else {
             drawNewShape(TETROMINOS.L);
             start = true;
         }
     }
 
     setInterval(function() {
-        if (start = true) {
+        if (start == true) {
             moveDown();
         }
     }, 1000);
@@ -105,56 +106,54 @@ function gameStart() {
 
     function moveDown() {
 
-        // check if block is at bottom
+        //check if block is at bottom
         for (let i = 0; i < currentPos.length; i++) {
             if (currentPos[i][0] >= 19) {
                 freeze = true;
             }
         }
 
+        //check blocks below are free
+        for (let i = 0; i < currentPos.length; i++) {
+            if (currentPos[i][0] < 19) {
+                if (grid[(currentPos[i][0] + 1)][(currentPos[i][1])] == "Q") {
+                    free = false;
+                }
+            }
+        }
+
         //freeze block
-        if (freeze == true) {
+        if ((freeze == true) || free == false) {
             console.log("BLOCK FROZEN");
             freeze = false;
+            free = true;
             start = false;
             movableL = true;
             movableR = true;
+            
+            
+            //set grid coords to "Q"
+            for (let i = 0; i < currentPos.length; i++) {
+                grid[(currentPos[i][0])][(currentPos[i][1])] = "Q";
+            }
 
             //grab all active blocks
             temp = document.querySelectorAll(".block");
 
-            //remove shape
+            //change blocks class to "taken"
             for (let i = 0; i < temp.length; i++) {
-                temp[i].remove();
-            }
-
-            // //change blocks class to "taken"
-            // for (let i = 0; i < temp.length; i++) {
-            //     temp[i].className = "taken";
-            // }
-
-            //add taken shape
-            reDrawShape(TETROMINOS.L);
-
-            //set grid coords to "Q"
-            for (let i = 0; i < currentPos.length; i++) {
-                grid[(currentPos[i][0])][(currentPos[i][1])] = "Q";
+                temp[i].className = "taken";
             }
             
             score += 1;
             newBlock();
         }
+
         //check coords below are free
         else {
-            for (let i = 0; i < currentPos.length; i++) {
-                if (grid[(currentPos[i][0] + 1)][(currentPos[i][1])] != "Q") {
-                    free = true;
-                }
-            }
 
             //move block down
             if (free == true) {
-                free = false;
 
                 //set old grid coords to blank
                 for (let i = 0; i < currentPos.length; i++) {
@@ -195,42 +194,29 @@ function gameStart() {
         if (shape == TETROMINOS.L) {
             currentPositionX = 90;
             currentPositionY = 0;
-            createDiv().id = "blue";
-            createDiv().id = "blue";
-            createDiv().id = "blue";
-            let temp = createDiv();
-            temp.id = "blue";
-            temp.style.top = "30px";
-            temp.style.right = "30px";
 
+            createDiv().id = "blue";
+            createDiv().id = "blue";
+            createDiv().id = "blue";
+            createDiv().id = "blue";
+
+            
             selectAll = document.querySelectorAll(".block")
+            
+            selectAll[0].style.left = (609.5 + "px");
+            selectAll[1].style.left = (639.5 + "px");
+            selectAll[2].style.left = (669.5 + "px");
+            selectAll[3].style.left = (669.5 + "px");
+
+            selectAll[0].style.top = (202 + "px");
+            selectAll[1].style.top = (202 + "px");
+            selectAll[2].style.top = (202 + "px");
+            selectAll[3].style.top = (232 + "px");
+
 
             for (let i = 0; i < selectAll.length; i++) {
                 selectAll[i].style.transform = "translate(" + currentPositionX + "px," + currentPositionY + "px)";
             }
-        }
-    }
-
-    function reDrawShape(shape) {
-        if (shape == TETROMINOS.L) {
-            let b1 = createDiv();
-            let b2 = createDiv();
-            let b3 = createDiv();
-            let b4 = createDiv();
-
-            b1.className = "taken";
-            b2.className = "taken";
-            b3.className = "taken";
-            b4.className = "taken";
-
-            b1.style.top = (currentPositionY + "px");
-            b1.style.left = (currentPositionX + "px");
-            b2.style.top = (currentPositionY + "px");
-            b2.style.left = (currentPositionX + "px");
-            b3.style.top = (currentPositionY + "px");
-            b3.style.left = (currentPositionX + "px");
-            b4.style.top = (currentPositionY + "px");
-            b4.style.left = (currentPositionX + "px");
         }
     }
     
@@ -339,6 +325,8 @@ function gameStart() {
      * @param score 
      */
     function gameOver(score) {
+        console.log("POST");
+
         $.ajax({
 
             type: "POST",
@@ -355,6 +343,7 @@ function gameStart() {
             },
             async: true,
         });
+
     }
     
 

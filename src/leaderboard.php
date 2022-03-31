@@ -37,7 +37,6 @@
                     <?php
                         $conn = mysqli_connect("localhost", "coursework", "courseworkwebdev", "tetris", 1111);
                         $result = mysqli_query($conn, "SELECT Username, Score FROM Scores ORDER BY Score DESC");
-                        $ranking = 1;
                 
                         if (mysqli_num_rows($result)) {
                             while ($row = mysqli_fetch_array($result)) {
@@ -45,7 +44,6 @@
                                 <td>{$row['Username']}</td>
                                 <td>{$row['Score']}</td>
                                 </tr>";
-                                $ranking++;
                             }
                         }
                     ?>

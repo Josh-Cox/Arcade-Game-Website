@@ -337,7 +337,7 @@ Tetris
     height: 600px;
     margin-left: auto;
     margin-right: auto;
-    background-color: yellow;
+    background-color: #c7c7c7;
 }
 
 .block {
@@ -345,7 +345,10 @@ Tetris
     height: 30px;
     position: absolute;
     float: left;
-    background-color: red;
+}
+
+#blue {
+    background-color: blue;
 }
 
 .taken {
@@ -353,7 +356,6 @@ Tetris
     height: 30px;
     position: absolute;
     float: left;
-    background-color: red;
 }
 
 button #start {
