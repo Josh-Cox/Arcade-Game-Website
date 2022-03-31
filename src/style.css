@@ -337,23 +337,21 @@ Tetris
     height: 600px;
     margin-left: auto;
     margin-right: auto;
-    display: flex;
-    flex-wrap: wrap;
     background-color: yellow;
 }
 
 .block {
     width: 30px;
     height: 30px;
-    position: relative;
+    position: absolute;
     float: left;
-    background-color: blue;
+    background-color: red;
 }
 
 .taken {
     width: 30px;
     height: 30px;
-    position: relative;
+    position: absolute;
     float: left;
     background-color: red;
 }

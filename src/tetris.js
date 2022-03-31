@@ -107,7 +107,7 @@ function gameStart() {
 
         // check if block is at bottom
         for (let i = 0; i < currentPos.length; i++) {
-            if (currentPos[i][0] > 18) {
+            if (currentPos[i][0] >= 19) {
                 freeze = true;
             }
         }
@@ -123,10 +123,19 @@ function gameStart() {
             //grab all active blocks
             temp = document.querySelectorAll(".block");
 
-            //change blocks class to "taken"
+            //remove shape
             for (let i = 0; i < temp.length; i++) {
-                temp[i].className = "taken";
+                temp[i].remove();
             }
+
+            // //change blocks class to "taken"
+            // for (let i = 0; i < temp.length; i++) {
+            //     temp[i].className = "taken";
+            // }
+
+            //add taken shape
+            reDrawShape(TETROMINOS.L);
+
             //set grid coords to "Q"
             for (let i = 0; i < currentPos.length; i++) {
                 grid[(currentPos[i][0])][(currentPos[i][1])] = "Q";
@@ -183,13 +192,13 @@ function gameStart() {
      * @param shape 
      */
     function drawNewShape(shape) {
-        if (shape = TETROMINOS.L) {
+        if (shape == TETROMINOS.L) {
             currentPositionX = 90;
             currentPositionY = 0;
             createDiv().id = "blue";
             createDiv().id = "blue";
             createDiv().id = "blue";
-            temp = createDiv();
+            let temp = createDiv();
             temp.id = "blue";
             temp.style.top = "30px";
             temp.style.right = "30px";
@@ -199,6 +208,29 @@ function gameStart() {
             for (let i = 0; i < selectAll.length; i++) {
                 selectAll[i].style.transform = "translate(" + currentPositionX + "px," + currentPositionY + "px)";
             }
+        }
+    }
+
+    function reDrawShape(shape) {
+        if (shape == TETROMINOS.L) {
+            let b1 = createDiv();
+            let b2 = createDiv();
+            let b3 = createDiv();
+            let b4 = createDiv();
+
+            b1.className = "taken";
+            b2.className = "taken";
+            b3.className = "taken";
+            b4.className = "taken";
+
+            b1.style.top = (currentPositionY + "px");
+            b1.style.left = (currentPositionX + "px");
+            b2.style.top = (currentPositionY + "px");
+            b2.style.left = (currentPositionX + "px");
+            b3.style.top = (currentPositionY + "px");
+            b3.style.left = (currentPositionX + "px");
+            b4.style.top = (currentPositionY + "px");
+            b4.style.left = (currentPositionX + "px");
         }
     }
     
