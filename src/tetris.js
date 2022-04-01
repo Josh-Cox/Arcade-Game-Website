@@ -636,6 +636,8 @@ function gameStart() {
             async: true,
         });
 
+        alert("Game Over\nHead to the leaderboard to see how you did!");
+
     }
     
 
