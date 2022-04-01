@@ -56,6 +56,7 @@ function gameStart() {
     let freeze = false;
     let movableR = true;
     let movableL = true;
+    let rotatable = false;
     let gameFinished = false;
     let currentBlock = TETROMINOS.L;
     let currentPositionX = 90;
@@ -65,20 +66,21 @@ function gameStart() {
         return Object.keys(object).find(key => object[key] === value);
     }
 
-    function setGrid(tetromino) {
+    function setGrid() {
         
         //set correct currentPos
-        for (let i = 0; i < tetromino.length; i++) {
-            currentPos[i][0] = tetromino[i][0] - 1;
-            currentPos[i][1] = tetromino[i][1] + 2;
+        for (let i = 0; i < currentBlock.length; i++) {
+            currentPos[i][0] = currentBlock[i][0] - 1;
+            currentPos[i][1] = currentBlock[i][1] + 2;
         }
 
 
         //loop through tetromino coords
         for (let i = 0; i < currentPos.length; i++) {
-            //set grid coords
+            //if start position is free
             if (grid[currentPos[i][0]][currentPos[i][1]] == "") {
-                grid[currentPos[i][0]][currentPos[i][1]] = getKeyByValue(TETROMINOS, tetromino);
+                //set grid coords
+                grid[currentPos[i][0]][currentPos[i][1]] = getKeyByValue(TETROMINOS, currentBlock);
             }
             else {
                 gameFinished = true;
@@ -90,9 +92,8 @@ function gameStart() {
             gameOver(score);
             // location.reload();
         }
-
         else {
-            drawNewShape(TETROMINOS.L);
+            drawNewShape();
             start = true;
         }
     }
@@ -127,7 +128,6 @@ function gameStart() {
             console.log("BLOCK FROZEN");
             freeze = false;
             free = true;
-            start = false;
             movableL = true;
             movableR = true;
             
@@ -143,10 +143,16 @@ function gameStart() {
             //change blocks class to "taken"
             for (let i = 0; i < temp.length; i++) {
                 temp[i].className = "taken";
+                temp[i].id = "";
             }
+
+            //check if any rows are complete
+            checkCompleteRows();
             
-            score += 1;
-            newBlock();
+            //create new block
+            if (start == true) {
+                newBlock();
+            }
         }
 
         //check coords below are free
@@ -188,36 +194,278 @@ function gameStart() {
     }
 
     /**
-     * Sets position and attributes of tetromino
-     * @param shape 
+     * Checks if any rows are complete in the grid
      */
-    function drawNewShape(shape) {
-        if (shape == TETROMINOS.L) {
-            currentPositionX = 90;
-            currentPositionY = 0;
+    function checkCompleteRows() {
+        let complete = true;
 
-            createDiv().id = "blue";
-            createDiv().id = "blue";
-            createDiv().id = "blue";
-            createDiv().id = "blue";
-
-            
-            selectAll = document.querySelectorAll(".block")
-            
-            selectAll[0].style.left = (609.5 + "px");
-            selectAll[1].style.left = (639.5 + "px");
-            selectAll[2].style.left = (669.5 + "px");
-            selectAll[3].style.left = (669.5 + "px");
-
-            selectAll[0].style.top = (202 + "px");
-            selectAll[1].style.top = (202 + "px");
-            selectAll[2].style.top = (202 + "px");
-            selectAll[3].style.top = (232 + "px");
-
-
-            for (let i = 0; i < selectAll.length; i++) {
-                selectAll[i].style.transform = "translate(" + currentPositionX + "px," + currentPositionY + "px)";
+        for (let i = 0; i <= 19; i++) {
+            for (let j = 0; j < grid[i].length; j++) {
+                if (grid[i][j] != "Q") {
+                    complete = false;
+                }
             }
+
+            if (complete == true) {
+                removeRow(i);
+            }
+            complete = true;
+        }
+    }
+
+    /**
+     * Removes a row from the grid
+     * @param row
+     */
+    function removeRow(row) {
+        console.log("REMOVE ROW " + row);
+
+        //set row coords to row above
+        for (let i = row; i >= (20 - row); i--) {
+            for (let j = 0; j <= 9; j++) {
+                grid[i][j] = grid[i - 1][j];
+            }
+        }
+
+        //get all taken blocks
+        let allTakenBlocks = document.querySelectorAll(".taken");
+
+        //remove row
+        let remainTakenBlocks = [];
+        let count = 0;
+
+        for (let i = 0; i < allTakenBlocks.length; i++) {
+            if (getTopOffset(allTakenBlocks[i]) == (202 + (row * 30))) {
+                allTakenBlocks[i].remove();
+            }
+            else if (getOffset(allTakenBlocks[i]) < (202 + (row * 30))) {
+                remainTakenBlocks[count] = allTakenBlocks[i];
+                count ++;
+            }
+        }
+
+
+        //move everything down
+        remainTakenBlocks.forEach(element => {
+            let x = getTranslateValues(element).x;
+            element.style.top = (getOffset(element) + 30) + "px";
+            element.style.transform = "translateY(0px)";
+            element.style.transform = "translateX(" + x + "px)";
+        });
+
+    }
+
+    function getTopOffset(block) {
+        let temp = block.getBoundingClientRect();
+        return Math.round((temp.top + window.scrollY));
+    }
+
+    function getOffset(block) {
+        let temp = block.getBoundingClientRect();
+        return (temp.top + window.scrollY);
+    }
+
+    /**
+     * Gets computed translate values
+     * @param {HTMLElement} element
+     * @returns {Object}
+     */
+    function getTranslateValues (element) {
+        const style = window.getComputedStyle(element)
+        const matrix = style['transform'] || style.webkitTransform || style.mozTransform
+    
+        // No transform property. Simply return 0 values.
+        if (matrix === 'none' || typeof matrix === 'undefined') {
+        return {
+            x: 0,
+            y: 0,
+            z: 0
+        }
+        }
+    
+        // Can either be 2d or 3d transform
+        const matrixType = matrix.includes('3d') ? '3d' : '2d'
+        const matrixValues = matrix.match(/matrix.*\((.+)\)/)[1].split(', ')
+    
+        // 2d matrices have 6 values
+        // Last 2 values are X and Y.
+        // 2d matrices does not have Z value.
+        if (matrixType === '2d') {
+        return {
+            x: matrixValues[4],
+            y: matrixValues[5],
+            z: 0
+        }
+        }
+    
+        // 3d matrices have 16 values
+        // The 13th, 14th, and 15th values are X, Y, and Z
+        if (matrixType === '3d') {
+        return {
+            x: matrixValues[12],
+            y: matrixValues[13],
+            z: matrixValues[14]
+        }
+        }
+    }
+
+    /**
+     * Sets position and attributes of tetromino
+     */
+    function drawNewShape() {
+        score += 1;
+        currentPositionX = 90;
+        currentPositionY = 0;
+
+        switch (currentBlock) {
+            case TETROMINOS.L:
+
+                //create 4 block divs
+                createDiv().id = "blue";
+                createDiv().id = "blue";
+                createDiv().id = "blue";
+                createDiv().id = "blue";
+            
+                //set selectAll to all block divs
+                selectAll = document.querySelectorAll(".block")
+                
+                //set correct coordinates
+                selectAll[0].style.left = (609.5 + "px");
+                selectAll[1].style.left = (639.5 + "px");
+                selectAll[2].style.left = (669.5 + "px");
+                selectAll[3].style.left = (669.5 + "px");
+    
+                selectAll[0].style.top = (202 + "px");
+                selectAll[1].style.top = (202 + "px");
+                selectAll[2].style.top = (202 + "px");
+                selectAll[3].style.top = (232 + "px");
+    
+                break;
+
+            case TETROMINOS.O:
+
+                //create 4 block divs
+                createDiv().id = "yellow";
+                createDiv().id = "yellow";
+                createDiv().id = "yellow";
+                createDiv().id = "yellow";
+            
+                //set selectAll to all block divs
+                selectAll = document.querySelectorAll(".block")
+                
+                //set correct coordinates
+                selectAll[0].style.left = (609.5 + "px");
+                selectAll[1].style.left = (639.5 + "px");
+                selectAll[2].style.left = (609.5 + "px");
+                selectAll[3].style.left = (639.5 + "px");
+    
+                selectAll[0].style.top = (202 + "px");
+                selectAll[1].style.top = (202 + "px");
+                selectAll[2].style.top = (232 + "px");
+                selectAll[3].style.top = (232 + "px");
+    
+                break;
+
+            case TETROMINOS.Z:
+
+                //create 4 block divs
+                createDiv().id = "orange";
+                createDiv().id = "orange";
+                createDiv().id = "orange";
+                createDiv().id = "orange";
+            
+                //set selectAll to all block divs
+                selectAll = document.querySelectorAll(".block")
+                
+                //set correct coordinates
+                selectAll[0].style.left = (609.5 + "px");
+                selectAll[1].style.left = (609.5 + "px");
+                selectAll[2].style.left = (639.5 + "px");
+                selectAll[3].style.left = (669.5 + "px");
+    
+                selectAll[0].style.top = (202 + "px");
+                selectAll[1].style.top = (232 + "px");
+                selectAll[2].style.top = (232 + "px");
+                selectAll[3].style.top = (232 + "px");
+    
+                break;
+
+            case TETROMINOS.S:
+
+                //create 4 block divs
+                createDiv().id = "red";
+                createDiv().id = "red";
+                createDiv().id = "red";
+                createDiv().id = "red";
+            
+                //set selectAll to all block divs
+                selectAll = document.querySelectorAll(".block")
+                
+                //set correct coordinates
+                selectAll[0].style.left = (639.5 + "px");
+                selectAll[1].style.left = (639.5 + "px");
+                selectAll[2].style.left = (609.5 + "px");
+                selectAll[3].style.left = (609.5 + "px");
+    
+                selectAll[0].style.top = (202 + "px");
+                selectAll[1].style.top = (232 + "px");
+                selectAll[2].style.top = (232 + "px");
+                selectAll[3].style.top = (262 + "px");
+    
+                break;
+
+            case TETROMINOS.T:
+
+                //create 4 block divs
+                createDiv().id = "purple";
+                createDiv().id = "purple";
+                createDiv().id = "purple";
+                createDiv().id = "purple";
+            
+                //set selectAll to all block divs
+                selectAll = document.querySelectorAll(".block")
+                
+                //set correct coordinates
+                selectAll[0].style.left = (609.5 + "px");
+                selectAll[1].style.left = (609.5 + "px");
+                selectAll[2].style.left = (639.5 + "px");
+                selectAll[3].style.left = (609.5 + "px");
+    
+                selectAll[0].style.top = (202 + "px");
+                selectAll[1].style.top = (232 + "px");
+                selectAll[2].style.top = (232 + "px");
+                selectAll[3].style.top = (262 + "px");
+
+                break;
+
+            case TETROMINOS.I:
+
+                //create 4 block divs
+                createDiv().id = "light-blue";
+                createDiv().id = "light-blue";
+                createDiv().id = "light-blue";
+                createDiv().id = "light-blue";
+            
+                //set selectAll to all block divs
+                selectAll = document.querySelectorAll(".block")
+                
+                //set correct coordinates
+                selectAll[0].style.left = (609.5 + "px");
+                selectAll[1].style.left = (639.5 + "px");
+                selectAll[2].style.left = (669.5 + "px");
+                selectAll[3].style.left = (699.5 + "px");
+    
+                selectAll[0].style.top = (202 + "px");
+                selectAll[1].style.top = (202 + "px");
+                selectAll[2].style.top = (202 + "px");
+                selectAll[3].style.top = (202 + "px");
+    
+                break;
+        }
+
+        //move divs to correct place
+        for (let i = 0; i < selectAll.length; i++) {
+            selectAll[i].style.transform = "translate(" + currentPositionX + "px," + currentPositionY + "px)";
         }
     }
     
@@ -245,9 +493,27 @@ function gameStart() {
                 keydown.preventDefault();
                 break;
             case "ArrowUp":
+                // rotate();
                 keydown.preventDefault();
                 break;
         }
+    }
+
+    function rotate() {
+          
+        //check if in bounds
+        for (let i = 0; i < currentPos.length; i++) {
+            if (currentPos[i][1] <= 0) {
+                rotatable = false;
+            }
+        }
+
+          let side = Math.sqrt(currentPos.length);
+          let rotate = function(d,i){
+             return [Math.abs(i % side - side+1), Math.floor(i/side)]
+          }
+          currentPos = currentPos.map(rotate);
+
     }
 
     function moveLeft() {
@@ -256,6 +522,15 @@ function gameStart() {
         for (let i = 0; i < currentPos.length; i++) {
             if (currentPos[i][1] <= 0) {
                 movableL = false;
+            }
+        }
+
+        //check blocks are free
+        for (let i = 0; i < currentPos.length; i++) {
+            if (currentPos[i][1] > 0) {
+                if (grid[(currentPos[i][0])][(currentPos[i][1] - 1)] == "Q") {
+                    movableL = false;
+                }
             }
         }
 
@@ -293,6 +568,15 @@ function gameStart() {
         for (let i = 0; i < currentPos.length; i++) {
             if (currentPos[i][1] >= 9) {
                 movableR = false;
+            }
+        }
+
+        //check blocks are free
+        for (let i = 0; i < currentPos.length; i++) {
+            if (currentPos[i][1] < 19) {
+                if (grid[(currentPos[i][0])][(currentPos[i][1] + 1)] == "Q") {
+                    movableR = false;
+                }
             }
         }
 
@@ -357,32 +641,32 @@ function gameStart() {
      */
     function newBlock() {
 
-        // let random = Math.floor(Math.random()*6);
-        let random = 1;
+        let random = Math.floor(Math.random()*6);
+        // let random = 0;
         switch(random) {
             case 0:
                 currentBlock = TETROMINOS.O;
-                setGrid(currentBlock);
+                setGrid();
                 break;
             case 1:
                 currentBlock = TETROMINOS.L;
-                setGrid(TETROMINOS.L);
+                setGrid();
                 break;
             case 2:
                 currentBlock = TETROMINOS.Z;
-                setGrid(currentBlock);
+                setGrid();
                 break;
             case 3:
                 currentBlock = TETROMINOS.S;
-                setGrid(currentBlock);
+                setGrid();
                 break;
             case 4:
                 currentBlock = TETROMINOS.T;
-                setGrid(currentBlock);
+                setGrid();
                 break;
             case 5:
                 currentBlock = TETROMINOS.I;
-                setGrid(currentBlock);
+                setGrid();
                 break;
         }
     }

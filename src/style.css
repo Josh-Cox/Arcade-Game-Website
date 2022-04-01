@@ -348,7 +348,27 @@ Tetris
 }
 
 #blue {
-    background-color: blue;
+    background-color: #0000ff;
+}
+
+#yellow {
+    background-color: #ffff00;
+}
+
+#orange {
+    background-color: #ff7f00;
+}
+
+#red {
+    background-color: #ff0000;
+}
+
+#purple {
+    background-color: #800080;
+}
+
+#light-blue {
+    background-color: #00ffff;
 }
 
 .taken {
@@ -356,6 +376,7 @@ Tetris
     height: 30px;
     position: absolute;
     float: left;
+    background-color: #666666
 }
 
 button #start {
