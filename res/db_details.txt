@@ -1,4 +1,0 @@
-Username: coursework
-Password: courseworkwebdev
-Host: localhost
-Database: tetris

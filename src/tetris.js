@@ -1,4 +1,7 @@
 function gameStart() {
+    let audio = document.getElementById("audio");
+    audio.volume = 0.2;
+    audio.play();
     document.getElementById("tetrisStart").style.visibility = "hidden";
 
     let grid = [
